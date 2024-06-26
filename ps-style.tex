@@ -1,0 +1,273 @@
+
+%%% Declare commands whether new or old
+\newcommand{\declarecommand}[1]{\providecommand{#1}{}\renewcommand{#1}}
+
+%------------------------------------------------------------------------
+%	COURSE INFORMATION
+%------------------------------------------------------------------------
+
+%%% Global document information
+\declarecommand{\university}{University of Toronto}
+\declarecommand{\coursename}{Multivariable Calculus with Proofs}
+\declarecommand{\coursecode}{MAT237}
+\declarecommand{\term}{2022-23}
+\declarecommand{\firstterm}{Fall 2022}
+\declarecommand{\secondterm}{Winter 2023}
+
+\declarecommand{\title}{\coursecode\, \coursename}
+\declarecommand{\subtitle}{\docname}
+\declarecommand{\subsubtitle}{Due \dueday\, \duedate \, by \duetime}
+\declarecommand{\author}{S. Artamonov, F. Parsch, and A. Zaman}
+
+
+%%% URLs
+\declarecommand{\urlGrading}{https://www.gradescope.ca/courses/7779} % Gradescope
+\declarecommand{\urlLMS}{https://q.utoronto.ca/courses/280409} % Quercus 
+\declarecommand{\urlFAQ}{https://q.utoronto.ca/courses/280409/pages/policies-and-faq} % Quercus FAQ page
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%		PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------
+%	FORMAT AND LAYOUT
+%------------------------------------------------------------------------
+\usepackage[24hr,iso]{datetime} % Required to write time of compilation
+\usepackage[margin=1in]{geometry} % Required for setting margins
+\parindent0pt % Set indentation to 0 pt
+\usepackage[english]{babel} % English language/hyphenation
+
+\declarecommand{\toggledraft}{
+	\usepackage[firstpageonly=true]{draftwatermark}
+	\def\answerborderwidth{1pt}
+}
+
+%------------------------------------------------------------------------
+%	COLORS
+%------------------------------------------------------------------------
+\usepackage{xcolor} % required to defined colours
+	\definecolor{DarkBlue}{HTML}{25355A}
+	\definecolor{LightBlue}{HTML}{007FA3}
+	\definecolor{Yellow}{HTML}{A37500}
+	\definecolor{Red}{HTML}{A3002E}
+
+%------------------------------------------------------------------------
+%	FONTS
+%------------------------------------------------------------------------
+\usepackage[charter,cal=cmcal]{mathdesign} % Specify font for serif family
+\usepackage{avant} % Specify avant font for sans serif family
+\usepackage{mathtools} % Replaces amsmath
+\usepackage{sectsty} % Specify section formatting
+	\sectionfont{\sffamily\color{DarkBlue}}
+	\subsectionfont{\sffamily\color{LightBlue}}
+	\subsubsectionfont{\small\sffamily}
+
+%------------------------------------------------------------------------
+%	TABLES, IMAGES, AND FIGURES
+%------------------------------------------------------------------------
+
+\usepackage{array} % Required for tables
+\usepackage{graphicx} % Required for including images
+	\graphicspath{{img/}} % Specifies the directory where pictures are stored
+\usepackage{tikz} % Required for creating plots
+	\usetikzlibrary{decorations.pathreplacing}
+\usepackage{tikz-3dplot} % Required for 3D plots
+\usepackage{tikz-cd} % Required for commutative diagrams
+\usepackage{pgfplots}
+	\pgfplotsset{compat=1.12}
+	\usepgfplotslibrary{colormaps}
+	\usepgfplotslibrary{patchplots}
+	\usepgfplotslibrary{fillbetween}
+
+%------------------------------------------------------------------------
+%	LINKS AND REFERENCES
+%------------------------------------------------------------------------
+
+\usepackage[hidelinks, urlcolor=Red, linkcolor=Yellow, colorlinks=true]{hyperref}   
+\usepackage[noabbrev,capitalise,nameinlink]{cleveref}
+
+%------------------------------------------------------------------------
+%	BOXES, CHOICES, AND LISTS
+%------------------------------------------------------------------------
+
+\usepackage{enumerate}
+\usepackage{enumitem} % Customize lists
+% \setlist{nolistsep} % Reduce spacing between bullet points and numbered lists
+
+\declarecommand\partlabel{(\thequestion\alph{partno})} % parts are labelled (1a)
+
+\usepackage{environ}
+%%% Answer environment makes a framed box of a chosen height
+\NewEnviron{answer}[1]{
+	\fullwidth{
+	\vspace*{-10pt}
+		\par\nobreak\vspace{\ht\strutbox}\noindent
+		\setlength{\fboxrule}{\answerborderwidth}
+		\fbox{% 
+		\parbox[c][#1][t]{\dimexpr\linewidth-2\fboxsep}{
+		\hrule width \hsize height 0pt \color{LightBlue} 
+		\BODY
+		}%
+		}%
+	}
+}
+\def\answerborderwidth{0pt} % Set answer boxes to be invisible by default
+
+% Define remark environment
+\NewEnviron{remark}{
+	\fullwidth{
+	\vspace*{-10pt}
+		\color{Red} \textbf{Remark:}  
+		\BODY
+	}
+}
+
+\CorrectChoiceEmphasis{\color{LightBlue}\bf}	
+
+\declarecommand{\CorrectChoiceBox}{
+	\checkboxchar{$\Box$} 
+	\checkedchar{$\blacksquare$}
+}
+\declarecommand{\CorrectChoiceCircle}{
+	\checkboxchar{\tikz[baseline=-0.6ex]\draw[black,thick] (0,0) circle (1ex);}
+	\checkedchar{\tikz[baseline=-0.6ex]\draw[LightBlue,fill=LightBlue,thick] (0,0) circle (1ex);}
+}
+
+ 
+%------------------------------------------------------------------------
+%	THEOREMS
+%------------------------------------------------------------------------
+
+\usepackage{amsthm}
+
+%%% Specify theorems
+\newtheorem{theorem}{Theorem}
+\newtheorem*{definition}{Definition}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{Theorem}
+
+
+%% Setup proof lines
+\NewEnviron{lines}{
+	\vspace*{-5pt}
+	\begin{center}
+	\fbox{\begin{minipage}{0.9\textwidth}
+	\begin{enumerate}[label=\arabic*.]
+		\it \BODY
+	\end{enumerate}
+	\end{minipage}
+	}
+	\end{center}
+}
+ 
+%------------------------------------------------------------------------
+%	HEADER & FOOTER
+%------------------------------------------------------------------------
+
+%%% Define footnote without marker
+\declarecommand{\blfootnote}[1]{%
+  \begingroup
+  \declarecommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+%%% Specify header and footer
+\pagestyle{headandfoot} 	\runningfootrule  
+	\runningfooter{\coursecode}{\docname\ - Page \the\numexpr\thepage\ of \numpages}{\duedate}
+
+%------------------------------------------------------------------------
+%	TITLE PAGE
+%------------------------------------------------------------------------
+
+
+%%% Define title
+\declarecommand{\maketitle}{
+	\begin{center}
+		{\color{DarkBlue}\Large\sffamily\bfseries\title} \\[2pt]
+		{\color{LightBlue}\Large\sffamily\bfseries\subtitle}
+		\blfootnote{Created and revised by \author. Last updated \today \, at \currenttime.}\\
+		{\sffamily\subsubtitle} 
+	\end{center}
+ 
+}
+
+%%% Define title page
+\declarecommand{\makeinstructions}
+{ 
+\section*{Instructions}
+This problem set is based on \docinfo. Please read the \href{\urlFAQ}{Problem Set FAQ} for details on submission policies, collaboration  rules, and general instructions.  
+\begin{itemize}
+	\item \textbf{\href{\urlLMS/pages/tutorials}{Tutorials} on \tutorialdate\, will help you with \docname.} You will work with peers and get help from TAs. Before attending, seriously attempt these problems and prepare initial drafts.
+	\item \textbf{Submissions are only accepted by \href{\urlGrading}{Gradescope}}. Do not send anything by email.  Late submissions are not accepted under any circumstance. Remember you can resubmit anytime before the deadline. 
+	\item \textbf{Submit your polished solutions using only this template PDF.} You will submit a single PDF with your full written solutions. If your solution is not written using this template PDF (scanned print or digital) then you will receive zero. Do not submit rough work. Organize your work neatly in the space provided.  
+	\item \textbf{Show your work and justify your steps} on every question, unless otherwise indicated. Put your final answer in the box provided, if necessary. 
+\end{itemize}
+We recommend you write draft solutions on separate pages and afterwards write your polished solutions here. You must fill out and sign the academic integrity statement below; otherwise, you will receive zero. 
+
+\section*{Academic integrity statement}
+%%% Student information
+% Person A
+\fbox{
+\begin{minipage}{\textwidth}
+{
+	\vspace{0.2in}
+	
+	\makebox[\textwidth]{\sffamily Full Name:\enspace{\bfseries\large\FirstStudentName\,}\hrulefill}
+	
+	\vspace{0.2in}
+	
+	\makebox[\textwidth]{\sffamily Student number:\enspace{\bfseries\large\FirstStudentNumber\,}\hrulefill}
+	
+	\vspace{0.1in}
+	
+}
+\end{minipage}
+}
+
+\vspace*{0.1in}
+
+% Person B
+\fbox{
+\begin{minipage}{\textwidth}
+{
+\vspace{0.2in}
+
+\makebox[\textwidth]{\sffamily Full Name:\enspace{\bfseries\large\SecondStudentName\,}\hrulefill}
+
+\vspace{0.2in}
+
+\makebox[\textwidth]{\sffamily Student number:\enspace{\bfseries\large\SecondStudentNumber\,}\hrulefill}
+
+\vspace{0.1in}
+
+}
+\end{minipage}
+}
+~
+
+I confirm that:
+
+\begin{itemize} 
+	\item I have read and followed the policies described in the \href{\urlFAQ}{Problem Set FAQ}. 
+	\item I have read and understand the rules for collaboration on problem sets described in the Academic Integrity subsection of the syllabus. I have not violated these rules while writing this problem set. 
+	\item I understand the consequences of violating the University's academic integrity policies as outlined in the \href{http://www.governingcouncil.utoronto.ca/policies/behaveac.htm}{Code of Behaviour on Academic Matters}. I have not violated them while writing this assessment.
+\end{itemize}
+By signing this document, I agree that the statements above are true. 
+
+% You should sign this PDF after compiling. Do not write your signature using LaTeX.
+\vspace{0.2in}
+{\large 
+	\makebox[\textwidth]{\sffamily Signatures: 1)\enspace\hrulefill} 
+	
+	\vspace{0.2in}
+	
+	\makebox[\textwidth]{\sffamily \hspace*{22mm} 2)\enspace\hrulefill} 
+}
+\vfill
+\pagebreak
+}
+
