@@ -1,0 +1,372 @@
+\documentclass{exam}
+
+\input{ps-style.tex}
+
+%%% Uncomment if you are writing a draft
+%\toggledraft
+
+%%% Uncomment if you want to show your multiple choice answers
+\printanswers
+
+%%% Local document information
+\declarecommand{\docname}{Problem Set 7}		\usepackage{neuralnetwork}
+\declarecommand{\dueday}{Friday}
+\declarecommand{\duedate}{March 17, 2023}
+\declarecommand{\duetime}{13:00 ET}
+\declarecommand{\tutorialdate}{Tuesday March 14, 2023}
+\declarecommand{\docinfo}{\href{\urlFAQ/modules}{Module J: Line integrals} (J1 to J5) and \href{\urlFAQ/modules}{Module K: Fundamental theorems in 2D} (K1)}
+
+%%% Uncomment both if you are a MAT237 teaching member writing the official  solutions
+%\declarecommand{\makeinstructions}{\vfill\pagebreak}
+%\declarecommand{\docname}{Problem Set 7 solutions}
+%\declarecommand{\authors}{C. Davies, A. Qiu, and A. Zaman}
+
+%%% Student information
+\declarecommand{\FirstStudentName}{} 
+\declarecommand{\FirstStudentNumber}{}
+
+\declarecommand{\SecondStudentName}{} % leave empty if you are submitting individually
+\declarecommand{\SecondStudentNumber}{} % leave empty if you are submitting individually
+
+%%% Custom math commands
+%% Standard
+\declarecommand{\ds}{\displaystyle} % force math styling
+\declarecommand{\emptyset}{\varnothing} % better empty set
+\declarecommand{\epsilon}{\varepsilon} % better epsilon
+\declarecommand{\R}{\mathbb{R}} % reals
+\declarecommand{\Z}{\mathbb{Z}} % integers
+\declarecommand{\Q}{\mathbb{Q}} % rationals
+\declarecommand{\N}{\mathbb{N}} % naturals
+\declarecommand{\C}{\mathbb{C}} % complex
+\DeclarePairedDelimiter\abs{\lvert}{\rvert} % absolue value
+\DeclarePairedDelimiter\norm{\lVert}{\rVert} % norm
+
+%% Linear algebra
+\declarecommand{\mat}[1]{\begin{bmatrix*}[r]#1\end{bmatrix*}}
+\declarecommand{\matc}[1]{\begin{bmatrix}#1\end{bmatrix}} % matrix
+\DeclareMathOperator{\Span}{span} % span
+\DeclareMathOperator{\Img}{img} % image
+\DeclareMathOperator{\Ker}{ker} % kernel
+\DeclareMathOperator{\Id}{id} % identity map
+\DeclareMathOperator{\Range}{range} % range
+\DeclareMathOperator{\Rref}{rref} % row reduced echelon form
+\DeclareMathOperator{\Rank}{rank} % rank
+\DeclareMathOperator{\Null}{null} % null space
+\DeclareMathOperator{\Nullity}{nullity} % nullity
+\DeclareMathOperator{\Proj}{proj} % projection
+\DeclareMathOperator{\Dim}{dim} % dimension
+
+%% Topology
+\DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\Cl}{cl}
+
+%% Calculus
+\DeclareMathOperator{\Length}{length} % length
+\DeclareMathOperator{\Area}{area} % area
+\DeclareMathOperator{\Vol}{vol} % volume
+\DeclareMathOperator{\Grad}{grad} % gradient
+\DeclareMathOperator{\Curl}{curl} % curl
+\DeclareMathOperator{\Div}{div} % divergence
+
+\usepackage{amsmath}
+
+\begin{document}
+
+
+
+\maketitle
+
+\vspace*{-15pt}
+\makeinstructions
+ 
+%%% PROBLEMS
+\section*{Problems} 
+
+\CorrectChoiceCircle % for multiple choice questions
+
+\begin{questions}
+
+
+%%% QUESTION 1
+\question  A 70 kilogram person slides down a frictionless slide from a point $30$ metres above ground to a point on the ground under the influence of the gravitational force $F(x,y,z) = (0, 0, -9.8 \cdot 70)$ measured in Newtons. The slide follows a spiral path which circles around the $z$-axis and, when viewed from above,  looks like a circle of radius $2$ metres. Starting $30$ metres up, the slide circles around five full times. ({\color{Yellow}Revised 2023-03-13})
+\begin{parts}
+
+
+\item Choose a parametrization of the path the person will follow starting at time $t=0$ at the top of the slide. It should be a simple regular parametrization, but you do not need to prove it. 
+
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{200pt}
+% Insert your answer here
+Define $C$ as the path of the slide. A picture of $C$ is shown to the right:\\\\\\\\\\\\
+
+Suppose it takes 30 seconds to slide down $C$, so the height travelled is proportional to the time elapsed. Since the $z$ component should trace the height of the slide, it should be $t$. The $x$ and $y$ components should trace a circle of radius 2, so they should have a 2cos and 2sin term respectively. Since $C$ circles around the $z$-axis five times, the variable inside the 2cos and 2sin should be $\frac{\pi t}{3}$ since $30\frac{\pi}{3} = 10\pi$, or five rotations.\\
+
+Thus, define $\gamma: [0, 30] \to \R^3$ by $\gamma(t) = (2\cos(\frac{\pi t}{3}), 2\sin(\frac{\pi t}{3}), t)$ for $t \in [0, 30]$. Notice it is a simple and regular parametrizataion of $C$.\\\\
+\end{answer}
+
+\item By calculating from definition, find the distance travelled (with units) by the person on the slide.  
+
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{300pt}
+% Insert your answer here
+The distance is the arc length. By definition 11.2.1, the arc length of $C$ is $\ell(C) = \int_{0}^{30}\norm{\gamma'(t)}dt = \int_{0}^{30}\norm{(-\frac{2\pi}{3}\sin(\frac{\pi t}{3}), \frac{2\pi}{3}\cos(\frac{\pi t}{3}), 1)}dt = \int_{0}^{30} \sqrt{(\frac{2\pi}{3})^2 + 1}dt = \int_{0}^{30} \frac{\sqrt{4\pi^2 + 9}}{3}dt = 10\sqrt{4\pi^2 + 9} \approx 69.63$. Thus, the person traveled $69.63$ meters on the slide.
+\end{answer}
+
+
+\item By calculating from definition, find the amount of work done (with units) on the person by $F$.
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{320pt}
+% Insert your answer here
+By definition 11.3.11, the work done by F on the person along $C$ is $\int_C F \cdot T ds = \int_0^{30} F(\gamma(t)) \cdot T(t) \norm{\gamma'(t)}dt = \int_0^{30} F(\gamma(t)) \cdot \gamma'(t)dt = \int_0^{30} (0,0,-9.8 \cdot 70) \cdot (-\frac{2\pi}{3}\sin(\frac{\pi t}{3}), \frac{2\pi}{3}\cos(\frac{\pi t}{3}), 1) dt = \int_0^{30} -9.8 \cdot 70 dt = 30 \cdot -9.8 \cdot 70 = -20580$. Thus, the work done is -20,580 Joules.
+\end{answer}
+
+\item If possible, use the fundamental theorem of line integrals to calculate the work done (with units) by $F$. If not, explain why not. 
+
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{250pt}
+% Insert your answer here
+Define $f: \R^3 \to \R$ by $f(x,y,z) = (-9.8\cdot70\cdot z)$. Notice $f$ is $C^1$. Since $F = \nabla f$, by the fundamental theorem of line integrals, $\int_C F \cdot d\gamma = \int_C \nabla f \cdot d\gamma = f(\gamma(30)) - f(\gamma(0)) = 30 \cdot -9.8 \cdot 70 = -20580$ Joules, the same answer as in b).
+\end{answer}
+
+
+
+\end{parts}
+
+
+
+\pagebreak
+%%% QUESTION 2
+\question  Let $C$ be an oriented curve that is parametrized by   $\gamma_1 : [a,b] \to \R^n$ and also by $\gamma_2 : [c,d] \to \R^n$. 
+
+Let $F$ be a vector field in $\R^n$ that is continuous on $C$. Prove  that 
+\[
+\ds \int_a^b F(\gamma_1(t)) \cdot \gamma_1'(t) dt = \int_c^d F(\gamma_2(t)) \cdot \gamma_2'(t) dt.
+\]
+(Hence, the line integral of $F$ along $C$ is well-defined.)
+
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{550pt}
+% Insert your answer here
+Since $\gamma_1$ and $\gamma_2$ parameterize the same oriented curve, they are reparametrizations
+of each other with the same orientation. By definition 11.1.24, this means there exists a continuous invertible $\phi: [a,b] \to [c,d]$ such that $\phi$ is $C^1$ on (a,b) with $\phi'>0$ and $\gamma_1 = \gamma_2 \circ \phi$.\\
+
+Then, $F(\gamma_1(t))\cdot\gamma_1'(t) = F(\gamma_2(\phi(t)))\cdot(\gamma_2'(\phi(t))\phi'(t))$ since $\gamma_1'(t) = \gamma_2'(\phi(t))\phi'(t)$ by the chain rule.\\
+
+Since $\phi'>0$ on $(a,b)$ and $\phi$ is continuous and invertible on [a, b], $\phi(a)=c$ and $\phi(b)=d$. Since $F$, $\gamma_2$, $\phi$, and $\phi'$ are continuous on their respective domains, $(F(\gamma_2(\phi(t)))\cdot\gamma_2'(\phi(t)))\phi'(t)$ is integrable on $t \in [a,b]$. By 1D substitution of integrals, this means $(F\circ\gamma_2)\cdot\gamma_2'$ is integrable on $[c,d]$.\\
+
+Thus, using the substitution $u = \phi(t)$ and $du = \phi'(t)dt$, we get $\int_a^b F(\gamma_1(t))\cdot\gamma_1'(t)dt = \int_a^b F(\gamma_2(\phi(t)))\cdot(\gamma_2'(\phi(t))\phi'(t))dt = \int_a^b (F(\gamma_2(\phi(t)))\cdot\gamma_2'(\phi(t)))\phi'(t)dt = \int_{\phi(a)}^{\phi(b)} F(\gamma_2(u))\cdot\gamma_2'(u)du = \int_{c}^{d} F(\gamma_2(u))\cdot\gamma_2'(u)du = \int_{c}^{d} F(\gamma_2(t))\cdot\gamma_2'(t)dt$ as needed.
+\end{answer}
+
+
+
+\pagebreak
+%%% QUESTION 3
+\question ({\color{Yellow} Revised 2023-03-13}) Consider the following true theorem.
+\begin{quote}
+	\textbf{Theorem A.} \it Let $U \subseteq \R^n$ be a non-empty $C^1$ path-connected open set. Let $F$ be a vector field in $\R^n$ that is continuous on $U$. If $\ds \int_C F \cdot d\gamma = 0$ for any closed piecewise curve $C$ lying in $U$, then there exists a $C^1$ function $f : U \to \R$ such that $F = \nabla f$. 
+\end{quote}
+Here is a WRONG proof of Theorem A.   
+\begin{lines}
+	\item Fix $a \in U$. For each $x \in U$, choose a curve $C_x$ from $a$ to $x$ lying inside $U$. 
+	\item Define $f : U \to \R$ by $f(x) = \int_{C_{x}} F \cdot d\gamma$ for $x \in U$. 
+	\item Fix $j \in \{1,\dots,n\}$ and let $\{e_1,\dots,e_n\}$ be the standard basis in $\R^n$. 
+	\item Let $\epsilon > 0$ be such that $B_{\epsilon}(a) \subseteq U$. 
+	\item For $h \in (-\epsilon,\epsilon)$ with $h \neq 0$, define $L_{a+he_j}$ to be the straight line segment from $a$ to $a+he_j$, so that
+		\[
+		\frac{f(a+he_j)-f(a)}{h} = \frac{1}{h}\int_{C_{a+he_j}} F \cdot d\gamma = \frac{1}{h} \int_{L_{a+he_j}} F \cdot d\gamma . 	
+		\]
+	\item Defining $\gamma : [0,1] \to \R^n$ by $\gamma(t) = a + the_j$, it follows that
+		\[
+		\frac{1}{h} \int_{L_{a+he_j}} F \cdot d\gamma = \frac{1}{h} \int_0^1 F(a+the_j) \cdot (h e_j) dt =  \int_0^1 F_j(a+the_j) dt = \frac{1}{h} \int_0^h F_j(a+te_j) dt
+		\]
+	\item By the fundamental theorem of calculus, $\ds \partial_j f(a) =  \lim_{h \to 0} \left[ \frac{1}{h} \int_0^h F_j(a+te_j) dt \right] = F_j(a).$ 
+	\item Since $a$ and $j$ were arbitrary, this proves that $F = \nabla f$. 
+\end{lines}
+You will identify when specific assumptions are required, and you will also identify the fatal error. 
+
+\begin{parts}
+
+\item Which line(s) require that $U$ is open? 
+
+\CorrectChoiceBox
+% Replace \choice with \CorrectChoice to select your desired answer(s)
+\begin{oneparcheckboxes}
+	\choice Line 1
+	\choice Line 2
+	\choice Line 3
+	\CorrectChoice Line 4
+	\choice Line 5		
+	\choice Line 6		
+	\choice Line 7		
+	\choice Line 8							
+\end{oneparcheckboxes}
+\medskip
+
+\item Which line(s) require that $U$ is path-connected? 
+
+\CorrectChoiceBox
+% Replace \choice with \CorrectChoice to select your desired answer(s)	
+\begin{oneparcheckboxes}
+	\CorrectChoice Line 1
+	\choice Line 2
+	\choice Line 3
+	\choice Line 4
+	\choice Line 5		
+	\choice Line 6		
+	\choice Line 7		
+	\choice Line 8							
+\end{oneparcheckboxes}
+\medskip
+
+\item Which line(s) require that the integral of $F$ along any piecewise closed curve is zero?
+
+\CorrectChoiceBox
+% Replace \choice with \CorrectChoice to select your desired answer(s)
+\begin{oneparcheckboxes}
+	\choice Line 1
+	\choice Line 2
+	\choice Line 3
+	\choice Line 4
+	\CorrectChoice Line 5		
+	\choice Line 6		
+	\choice Line 7		
+	\choice Line 8							
+\end{oneparcheckboxes}
+\medskip
+
+\item Which line has the false claim in this argument? Identify the line and describe the flaw in  $\leq 100$ words. 
+
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{130pt}
+% Insert your answer here
+The false line is line 8. Instead of showing $\exists f$ such that $F(a) = \nabla f(a)$, $\forall a \in U$, the proof shows $\forall a \in U$, $\exists f$ such that $F(a) = \nabla f(a)$. This is because in the proof, the line integral of $f$ only depends on a single curve $C_{a+he_j}$, which in turn depends on the point $a$. This potentially allows for multiple functions $f$ in $U$ for different curves and different $a$. Thus, the proof does not conclude that there exists a single $f$ satisfying $F(a) = \nabla f(a)$ everywhere in $U$.
+\end{answer}
+
+
+\end{parts}
+
+
+ 
+\pagebreak
+%%% QUESTION 4
+\question \label{Irrotational} Irrotational vector fields are gradient vector fields in some cases. 
+\begin{quote}
+	\textbf{Theorem B.} \it If $U \subseteq \R^2$ is an open simply-connected set and $F$ is a $C^1$ irrotational vector field on  $U$, then $F$ is a gradient vector field on $U$. That is, $F = \nabla f$ on $U$ for some $C^2$ scalar function $f$ on $U$. 
+\end{quote} 
+On the other hand, you can verify that the vector field $ \ds F(x,y) = \big( \tfrac{-y}{x^2+y^2} , \tfrac{x}{x^2+y^2} \big)$ is irrotational and yet  $F$ is not a gradient vector field.  You may assume these facts without proof. 
+\begin{parts}
+
+\item Explain why $F$ does not contradict Theorem B in at most 2 full sentences. 
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{70pt}
+% Insert your answer here
+$F$ is not defined at the point $(0,0)$, so its domain is $\R \setminus \{(0,0)\}$, which is not a simply-connected set. Thus, Theorem B does not apply to $F$.
+\end{answer}
+\item \label{Upper} Let $V = \{ (x,y) \in \R^2 : y > 0\}$. Find all potential functions of the vector field  $F|_V$. 
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{430pt}
+% Insert your answer here
+Suppose $F|_V$ has a potential $f: V \to \R^2$, so $F|_V(x,y) = \nabla f(x,y)$ for $(x,y) \in V$. This means $f$ must satisfy $\tfrac{\partial f}{\partial x} = \tfrac{-y}{x^2+y^2}$ and $\tfrac{\partial f}{\partial y} = \tfrac{x}{x^2+y^2}$ for $(x,y) \in V$. (*)\\
+
+Integrate the first equation with respect to $x$, holding $y$ fixed: $f(x,y) = \int \tfrac{-y}{x^2+y^2} dx$. Using the u-substitution $u = \tfrac{x}{y}$ and $du = \frac{dx}{y}$, this equals: $-\int \frac{y^2}{y^2u^2+y^2} du = -\int \frac{1}{u^2+1} du = -\arctan(u) + \phi(y) = -\arctan(\frac{x}{y}) + \phi(y)$, where $\phi: \R^+ \to \R^2$ is an arbitrary function of $y$.\\
+
+Taking $f(x,y) = -\arctan(\frac{x}{y}) + \phi(y)$ as solved above, $\tfrac{\partial f}{\partial y} = (-\frac{y^2}{y^2+x^2})(-\frac{x}{y^2}) + \phi'(y) = \frac{x}{y^2+x^2} + \phi'(y)$. By (*), this means $\phi'(y) = 0$, so $\phi(y) = C$ for some $C \in \R$ by the MVT.\\
+
+Since $\tfrac{\partial f}{\partial x} = \tfrac{-y}{x^2+y^2}$ and $\tfrac{\partial f}{\partial y} = \tfrac{x}{x^2+y^2}$ by direct calculation, all potential functions of $F|_V$ are represented by $f(x,y) = -\arctan(\frac{x}{y}) + C$ for $(x,y) \in V$, $C \in \R$.
+\end{answer}
+\pagebreak
+\item \label{Lower} Let $W = \{(x,y) \in \R^2 : y < 0\}$. State (without proof) all potential functions of the vector field $F|_W$. 
+\begin{answer}{60pt}
+% Insert your answer here
+$f(x,y) = -\arctan(\frac{x}{y}) + C$ for $(x,y) \in W$, $C \in \R$.
+\end{answer}
+\item Let $U = V \cup W \cup \{ (x,y) \in \R^2 : x > 0, y = 0\}$. Find a potential function $\phi : U \to \R$ of the vector field $F|_U$. Use (\ref{Irrotational}\ref{Upper}) and (\ref{Irrotational}\ref{Lower}) and additional arguments to justify that $F|_U = \nabla \phi$.  Can you extend your function $\phi$ to be continuous on a larger set containing $U$? Briefly explain why or why not. ({\color{Yellow} Revised 2023-03-13})
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{500pt}
+% Insert your answer here
+Define $\phi: U \to \R$ by \begin{equation} \phi(x,y) = \begin{cases} 
+      f(x,y)+\frac{\pi}{2} & x \in \R, y>0\\
+      f(x,y)-\frac{\pi}{2} & x \in \R, y<0\\
+      \arctan(\frac{y}{x}) & x>0, y=0 
+\end{cases}\end{equation} for $f$ as defined in 4b and 4c. Notice $\phi$ is continuous on $U$ since $f$ is continuous on $V$ and $W$, and for $x>0$, $\ds \lim_{y \to 0^-} f(x,0)-\frac{\pi}{2} = 0 = \ds \lim_{y \to 0^+} f(x,0)+\frac{\pi}{2} = \phi(x,0)$.\\
+
+Since\begin{itemize}
+  \item $\nabla \phi|_V = \nabla (f(x,y)+\frac{\pi}{2}) = \nabla f(x,y) = F|_V$ by 4b,
+  \item $\nabla \phi|_W = \nabla (f(x,y)-\frac{\pi}{2}) = \nabla f(x,y) = F|_W$ by 4c, and
+  \item $\nabla (\arctan(\frac{y}{x})) = (\tfrac{-y}{x^2+y^2}, \tfrac{x}{x^2+y^2}) = F(x,y)$ for $x>0,y=0$,
+\end{itemize}
+$\nabla \phi = F|_U$.\\
+
+$\phi$ cannot be extended to be continuous on a larger set containing $U$ since for $x<0,y=0$, $\ds \lim_{y \to 0^-} f(x,0)-\frac{\pi}{2} = -\pi \neq \pi = \ds \lim_{y \to 0^+} f(x,0)+\frac{\pi}{2}$. Hence, it is impossible to join the pieces of $\phi$ with a function at the negative x-axis.
+\end{answer}
+
+\end{parts}
+ 
+
+
+\pagebreak
+%%% QUESTION 5
+\question  Let $F = (f,g)$ be a vector field in $\R^2$ with $C^1$ components $f$ and $g$. Fix a point $p = (x,y) \in \R^2$ in the domain of $F$. For $\epsilon > 0$, let $B_{\epsilon}(p) \subseteq \R^2$ be the disk of radius $\epsilon$ centred at $p$. Orient its boundary $\partial B_{\epsilon}(p)$ counterclockwise.  \textbf{Do not use Green's theorem for any part of this question.} 
+
+\begin{parts}	
+
+\item \label{Setup} For $\epsilon > 0$, show that the flux of $F$ across $\partial B_{\epsilon}(p)$ may be expressed as
+\[
+\oint_{\partial B_{\epsilon}(p)} (F \cdot n) \,  ds = \int_{0}^{2\pi} f(x+\epsilon \cos t, y + \epsilon \sin t) \cdot \epsilon \cos t + g(x+ \epsilon \cos t, y + \epsilon \sin t) \cdot \epsilon \sin t dt.
+\]
+
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{520pt}
+% Insert your answer here
+Let $\epsilon$ > 0. Parametrize $\partial B_{\epsilon}(p)$ by $\gamma: [0,2\pi] \to \R^2$ defined by $\gamma(t) = (x+\epsilon\cos t, y+\epsilon\sin t)$ for $t \in [0,2\pi]$. Notice $||\gamma'(t)|| = ||(-\epsilon\sin t, \epsilon\cos t)|| = \sqrt{(-\epsilon\sin t)^2 + (\epsilon\cos t)^2} = \sqrt{\epsilon^2} = \epsilon$.\\
+
+The unit tangent of $\partial B_{\epsilon}(p)$ is $T(t) = \frac{\gamma'(t)}{||\gamma'(t)||} = \frac{(-\epsilon\sin t, \epsilon\cos t)}{\epsilon} = (-\sin t, \cos t)$.\\
+
+Define $n: [0,2\pi] \to \R^2$ by $n(t) = (\cos t, \sin t)$ for $t \in [0,2\pi]$. Notice that for all $t \in [0,2\pi]$:\begin{itemize}
+  \item $T(t) \cdot n(t) = (-\sin t)(\cos t) + (\cos t)(\sin t) = 0$.
+  \item $||n(t)|| = \sqrt{\cos^2 t + \sin^2 t} = 1$.
+  \item The matrix $(n(t), T(t)) = \begin{pmatrix}
+  \cos t & -\sin t \\
+  \sin t & \cos t
+  \end{pmatrix}$ has determinant $1 > 0$, so $\{n(t), T(t)\}$ is a positively oriented basis in $\R^2$.
+\end{itemize}
+Thus, $n$ is the unit normal of $\partial B_{\epsilon}(p)$.\\
+
+By definition, the flux of $F$ across $\partial B_{\epsilon}(p)$ is $\oint_{\partial B_{\epsilon}(p)} (F \cdot n) \,ds = \int_{0}^{2\pi} F(\gamma(t)) \cdot n(t)||\gamma'(t)|| dt = \int_{0}^{2\pi} F(x+\epsilon\cos t, y+\epsilon\sin t) \cdot (\cos t, \sin t)(\epsilon) dt = \int_{0}^{2\pi} f(x+\epsilon \cos t, y + \epsilon \sin t) \cdot \epsilon \cos t + g(x+ \epsilon \cos t, y + \epsilon \sin t) \cdot \epsilon \sin t dt$ as needed.
+\end{answer}
+
+\pagebreak
+\item Since $f$ is $C^1$ on $U$,  differentiability implies that there exists $\delta_f> 0$ and  $E_f  : B_{\delta_f}((0,0)) \to \R$   such that
+	\[
+	\forall (\Delta x, \Delta y) \in B_{\delta_f}(0,0), \quad f(x+\Delta x, y+ \Delta y) = f(x,y) + \partial_1 f(x,y) \Delta x + \partial_2 f(x,y) \Delta y + E_f(\Delta x , \Delta y), 
+	\] 
+	where $\ds\lim_{(a,b) \to (0,0)} \tfrac{|E_f(a,b)|}{||(a,b)||}  = 0$. The analogous statement holds for $g$ with $\delta_g > 0$ and $E_g : B_{\delta_g}((0,0)) \to \R$. \\
+	
+	Prove that for $0 < \epsilon < \tfrac{\min\{ \delta_f, \delta_g \}}{2}$,   
+	\[
+  \frac{1}{\mathrm{area}(B_{\epsilon}(p))} \oint_{\partial B_{\epsilon}(p)} (F \cdot n)\, ds = (\Div F)(p) + \frac{1}{\pi \epsilon} \int_{0}^{2\pi} E_f(\epsilon \cos t, \epsilon \sin t) \cdot  \cos t + E_g(\epsilon \cos t, \epsilon \sin t) \cdot \sin t \; dt.  
+	\]
+
+
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{470pt}
+% Insert your answer here
+\end{answer}
+
+\pagebreak
+\item Use the definition of a limit to prove that $\ds \lim_{\epsilon \to 0^+} \frac{1}{\pi\epsilon} \int_{0}^{2\pi} E_f(\epsilon \cos t, \epsilon \sin t) \cos t \; dt = 0$. Assuming without proof that a similar identity holds for $E_g$, conclude that  
+\[
+(\Div F)(p) = \ds \lim_{\epsilon \to 0^+} \frac{1}{\mathrm{area}(B_{\epsilon}(p))} \oint_{\partial B_{\epsilon}(p)} (F \cdot n)\, ds. 	
+\]
+
+
+%% Do not change the height of this box; your work must fit inside
+\begin{answer}{550pt}
+% Insert your answer here
+\end{answer}
+
+\end{parts}
+ 
+\end{questions}
+
+\end{document}
