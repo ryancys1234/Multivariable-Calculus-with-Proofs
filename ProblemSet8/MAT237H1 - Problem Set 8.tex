@@ -1,0 +1,311 @@
+\documentclass{exam}
+
+\input{ps-style.tex}
+
+%%% Uncomment if you are writing a draft
+%\toggledraft
+
+%%% Uncomment if you want to show your multiple choice answers
+\printanswers
+\usepackage{graphicx}
+%%% Local document information
+\declarecommand{\docname}{Problem Set 8}		\usepackage{neuralnetwork}
+\declarecommand{\dueday}{Friday}
+\declarecommand{\duedate}{March 31, 2023}
+\declarecommand{\duetime}{13:00 ET}
+\declarecommand{\tutorialdate}{Tuesday March 28, 2023}
+\declarecommand{\docinfo}{\href{\urlFAQ/modules}{Module K: Fundamental theorems in 2D} (K2 and K3) and \href{\urlFAQ/modules}{Module L: Surface integrals} (L1 to L4)}
+
+%%% Uncomment both if you are a MAT237 teaching member writing the official  solutions
+%\declarecommand{\makeinstructions}{\vfill\pagebreak}
+%\declarecommand{\docname}{Problem Set 7 solutions}
+%\declarecommand{\authors}{C. Davies, A. Qiu, and A. Zaman}
+
+%%% Student information
+\declarecommand{\FirstStudentName}{} 
+\declarecommand{\FirstStudentNumber}{}
+
+\declarecommand{\SecondStudentName}{} % leave empty if you are submitting individually
+\declarecommand{\SecondStudentNumber}{} % leave empty if you are submitting individually
+
+%%% Custom math commands
+%% Standard
+\declarecommand{\ds}{\displaystyle} % force math styling
+\declarecommand{\emptyset}{\varnothing} % better empty set
+\declarecommand{\epsilon}{\varepsilon} % better epsilon
+\declarecommand{\R}{\mathbb{R}} % reals
+\declarecommand{\Z}{\mathbb{Z}} % integers
+\declarecommand{\Q}{\mathbb{Q}} % rationals
+\declarecommand{\N}{\mathbb{N}} % naturals
+\declarecommand{\C}{\mathbb{C}} % complex
+\DeclarePairedDelimiter\abs{\lvert}{\rvert} % absolue value
+\DeclarePairedDelimiter\norm{\lVert}{\rVert} % norm
+
+%% Linear algebra
+\declarecommand{\mat}[1]{\begin{bmatrix*}[r]#1\end{bmatrix*}}
+\declarecommand{\matc}[1]{\begin{bmatrix}#1\end{bmatrix}} % matrix
+\DeclareMathOperator{\Span}{span} % span
+\DeclareMathOperator{\Img}{img} % image
+\DeclareMathOperator{\Ker}{ker} % kernel
+\DeclareMathOperator{\Id}{id} % identity map
+\DeclareMathOperator{\Range}{range} % range
+\DeclareMathOperator{\Rref}{rref} % row reduced echelon form
+\DeclareMathOperator{\Rank}{rank} % rank
+\DeclareMathOperator{\Null}{null} % null space
+\DeclareMathOperator{\Nullity}{nullity} % nullity
+\DeclareMathOperator{\Proj}{proj} % projection
+\DeclareMathOperator{\Dim}{dim} % dimension
+
+%% Topology
+\DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\Cl}{cl}
+
+%% Calculus
+\DeclareMathOperator{\Length}{length} % length
+\DeclareMathOperator{\Area}{area} % area
+\DeclareMathOperator{\Vol}{vol} % volume
+\DeclareMathOperator{\Grad}{grad} % gradient
+\DeclareMathOperator{\Curl}{curl} % curl
+\DeclareMathOperator{\Div}{div} % divergence
+
+\begin{document}
+
+
+
+\maketitle
+
+\vspace*{-15pt}
+\makeinstructions
+ 
+%%% PROBLEMS
+\section*{Problems} 
+
+\CorrectChoiceCircle % for multiple choice questions
+
+%%% Do not change the height of this box; your work must fit inside
+%\begin{answer}{550pt}
+%% Insert your answer here
+%\end{answer}
+
+
+\begin{questions}
+
+%%% QUESTION 1
+\question  Let $F(x,y) = \left( xy^2+2y, e^{x^2} + y^4   \right)$ be a vector field in $\R^2$. Let $C_1 \subseteq \R^2 $ be the oriented curve  parametrized by $\gamma_1(t) = (6-t-t^2, t)$ for $-3 \leq t \leq 2$. Compute the normal flow of $F$ across $C_1$ and include a well-labeled sketch illustrating your argument. \textit{Hint:} Close the loop. 
+
+% Do not change the height of this box
+\begin{answer}{560pt}
+% Insert your answer here
+Define $C_2$ as the straight line from $(0,-3)$ to $(0,2)$. Parametrize it by $\phi: [-3,2] \to \R^2$ defined by $\phi(t) = (0,t)$ for $t\in [-3,2]$. The tangent to $C_2$ is $T_{C_2}(t) = (0,1)$ for $t \in [-3,2]$. Define $n:[-3,2]\to\R^2$ by $n(t)=(1,0)$ for $t\in[-3,2]$. Notice $n$ is the normal to $C_2$ since for $t \in [-3,2]$, $n(t) \cdot T_{C_2} = 0$, $||n(t)|| = 1$, and $\{n(t), T_{C_2}\}$ is a positively oriented basis of $\R^2$ by the right hand rule.\\
+
+Define the region $R = \{(x,y)\in\R^2: -3\leq y\leq 2,0\leq x\leq 6-y-y^2\}$. A picture of $C_1$, $C_2$, and $R$ with their orientations is shown below:
+
+%%% Link to graph: https://www.desmos.com/calculator/roqkv7zhh4
+\begin{center}
+    \includegraphics[scale=0.15]{mat237-ps8-tex/Graph.png}
+\end{center}
+
+Notice $C_1-C_2 = \{(x,y)\in\R^2:x=6-y-y^2, y\in[-3,2]\}\cup\{(0,y)\in\R^2:y\in[-3,2]\} = \partial R$ is a positively oriented piecewise curve. Also, $F$ is $C_1$ on $R$, which is a regular region since $R = \overline{R^{\mathrm{o}}}$. Thus, Green's theorem (divergence form) can be applied:
+\begin{align}
+\oint_{\partial R} (F\cdot n) ds = \oint_{C_1-C_2} (F\cdot n) ds = \int_{C_1} (F\cdot n) ds - \int_{C_2} (F\cdot n) ds = \iint_R \Div(F) dA
+\end{align} by Lemma 11.3.16.\\
+
+Then, we have the following:\begin{align*}\int_{C_2} (F\cdot n)ds = \int_{-3}^{2} F(\phi(t))\cdot n(t)||\phi'(t)||dt = \int_{-3}^{2} (2t,1+t^4)\cdot (1,0)dt = \int_{-3}^{2}2tdt = -5\end{align*}\begin{align*}\iint_R \Div(F)dA = \iint_R (y^2+4y^3)dA = \int_{-3}^2\int_0^{6-y-y^2} (y^2+4y^3)dxdy=\int_{-3}^2 (6y^2+23y^3-5y^4-4y^5)dy =-\frac{1625}{12}\end{align*}\\
+
+Thus, by rearranging (1), we have \begin{align*}\int_{C_1}(F\cdot n)ds = -\frac{1625}{12}+(-5) = -\frac{1685}{12}\end{align*}
+\end{answer}
+
+\pagebreak
+%%% QUESTION 2
+\question   \label{AllTheCalculus} Multivariable calculus has shown how you can do calculus with all of your linear algebra. Now, near the end of your journey, it is time to do linear algebra with all of your  calculus (in two dimensions). 
+
+Let $U \subseteq \R^2$ be an open set.  Let $C^{\infty}(U)$ be the set of real-valued functions $f : U \to \R$  with infinitely many partial derivatives; that is, $\partial^{\alpha} f$ exists and is continuous on $U$ for all multi-indices $\alpha \in \N^2$. The space of \textbf{$C^{\infty}$ scalar functions} $V= C^{\infty}(U)$ and space of \textbf{$C^{\infty}$ vector fields} $V^2 = V \times V$ can each be thought of as a space of vectors.  For example, the zero function belongs to $V$  and acts  as the zero vector. Moreover, any linear combination in $V$ also belongs to $V$. Similar statements hold  true for $V^2$.   
+
+
+\begin{parts}
+	\item   You can view the differential operators `$\Grad$' and `$\Curl$' as linear transformations on these spaces. 
+	\begin{itemize}
+		\item Gradient is a linear map of $C^{\infty}$ scalar functions to $C^{\infty}$ vector fields. 
+	
+		That is, $\mathrm{grad} : V \to V^2$ is a linear map. Hence, if $f \in V$ then $\Grad(f) \in V^2$.	
+	
+		\item Two-dimensional curl is a linear map of $C^{\infty}$ vector fields to $C^{\infty}$ scalar functions. 
+	
+		That is, $\Curl : V^2 \to V$ is a linear map. Hence, if $F \in V^2$ then $\Curl(F) \in V$. 
+	\end{itemize}
+	Prove that  $\Curl$ is a linear map from $V^2$ to $V$. In other words, show $\Curl(F + \lambda G) = \Curl(F) + \lambda \Curl(G)$ for any $F, G \in V^2$ and any $\lambda \in \R$.  You may assume that the  partial derivative operators $\partial_1 : V \to V$ and $\partial_2 : V \to V$ are linear maps. 
+	% Do not change the height of this box
+	\begin{answer}{250pt}
+		% Insert your answer here
+Let $F, G \in V^2$ and $\lambda \in \R$. $\Curl(F + \lambda G) = \partial_1 ((F + \lambda G)_2) - \partial_2 ((F + \lambda G)_1) = \partial_1 (F_2 + \lambda G_2) - \partial_2 (F_1 + \lambda G_1) = \partial_1 F_2 + \lambda \partial_1 G_2 - \partial_2 F_1 - \lambda \partial_2 G_1$ since $\partial_1$ and $\partial_2$ are linear maps. Rearranging terms, this equals $(\partial_1 F_2 - \partial_2 F_1) + \lambda(\partial_1 G_2 - \partial_2 G_1) = \Curl(F) + \lambda\Curl(G)$.
+	\end{answer}	
+	
+	\item \label{ImgKer} The image of the gradient is contained in the kernel of curl. That is, $\Img(\Grad) \subseteq \Ker (\Curl)$. There are two ways to prove this fact: by boring calculation or by the "one true proof". 
+	
+	Prove that $\Img(\Grad) \subseteq \Ker (\Curl)$ by a boring calculation with partial derivatives.  
+	% Do not change the height of this box
+	\begin{answer}{120pt}
+		% Insert your answer here
+Let $f\in V$, so $\Grad(f)=(\partial_1 f,\partial_2 f) \in V^2$. By Clairaut's theorem (Theorem 6.2.8), since $U$ is open and $f$ is $C^1$, $\partial_2\partial_1 f=\partial_2\partial_1 f$. Thus, $\Curl(\Grad(f)) = \partial_1\partial_2 f-\partial_2\partial_1 f=0$, meaning $\Grad(f)\in\Ker(\Curl)=\{F\in V^2:\Curl(F)=0\}$. Since $f$ was arbitrary, $\Img(\Grad)\subseteq\Ker(\Curl)$.
+	\end{answer}	
+
+
+	\pagebreak
+	\item The "one true proof" of $\Img(\Grad) \subseteq \Ker (\Curl)$  relies upon the fundamental theorem of line integrals and Green's theorem.  Here is such an attempt to prove this containment. 
+	\begin{lines}
+		\item Let $F \in \Img(\Grad)$ and $p \in U$. Then $\forall \epsilon > 0$,$\ds\oint_{\partial B_{\epsilon}(p)} (F \cdot T)\,  ds = 0$.
+		\item  $\ds \implies \forall \epsilon > 0$, $\ds \iint_{\overline{B_{\epsilon}(p)}} (\Curl F) \, dA = 0  \implies \lim_{\epsilon \to 0^+} \left[ \frac{1}{\Area(\overline{B_{\epsilon}(p)})} \iint_{\overline{B_{\epsilon}(p)}} (\Curl F) \, dA \right] = 0$
+		\item $\ds  \implies  (\Curl F)(p) = 0 \implies F \in \Ker(\Curl)$ 
+	\end{lines}
+	There are no serious errors but it is terribly written. Rewrite this into a well-written justified proof. \\ Do \textbf{not} use Lemma 12.1.7.   \textit{Hint:} Use FTLI, Green's, and integral MVT. 
+
+	% Do not change the height of this box
+	\begin{answer}{470pt}
+		% Insert your answer here
+Let $F \in \Img(\Grad)$, so $F=\Grad(f)$ for some $f\in V$. Let $\epsilon>0$, and let $p=(x,y)\in U$. Define $R=\overline{B_{\epsilon}(p)}$ and $\partial R=\partial B_{\epsilon}(p)$.\\
+
+Parametrize $\partial R$ by $\gamma:[0,2\pi] \to \R^2$ defined by $\gamma(t)=(x+\epsilon\cos(t),y+\epsilon\sin(t))$ for $t\in[0,2\pi]$. Notice that $\partial R=\gamma([0,2\pi])$, $\gamma$ is continuous on $[0,2\pi]$, $\gamma$ is $C^1$ on $(0,2\pi)$, $\gamma '(t)=(-\epsilon\sin(t),\epsilon\cos(t))\neq0$ for $t\in(0,2\pi)$, and $\gamma$ is injective on $(0,2\pi)$. By definition 11.1.8, $\gamma$ is a simple regular parametrization of $\partial R$, meaning $\partial R$ is a curve. Furthermore, $\gamma(0)=\gamma(2\pi)$, so $\partial R$ is closed.\\
+
+By definition, the circulation of $F$ along $\partial R$ is $\oint_{\partial R} F\cdot Tds=\int_0^{2\pi} F(\gamma(t))\cdot\gamma'(t)dt=\int_{\partial R} F\cdot d\gamma$, where $d\gamma=\gamma'(t)dt$. Since $F=\Grad(f)$, this is equivalent to $\int_{\partial R} \Grad(f)\cdot d\gamma$, which by the FTLI equals $f(\gamma(0))-f(\gamma(2\pi))=f(x+\epsilon,y)-f(x+\epsilon,y)=0$. (The FTLI can be applied since $f$ is $C^1$ on U, which contains $\partial R$.) Thus, $\oint_{\partial R} F\cdot Tds=0$.\\
+
+Note $R$ is compact, Jordan measurable, and $\overline{R^{\mathrm{o}}}=R$, so it is a regular region. By Problem Set 7 5a), the unit normal of $\partial R$ is $n(t)=(\cos(t),\sin(t))$ for $t\in[0,2\pi]$, which points away from $R$, so $\partial R$ is positively oriented. Thus, Green's theorem (curl form) can be applied: $\oint_{\partial R} F\cdot Tds=\iint_{R} \Curl(F) dA=0$. (*)\\
+
+Note (*) holds true for all $\epsilon>0$. Thus, \begin{align}
+    \lim_{\epsilon \to 0^+} \left[ \frac{1}{\Area(R)} \iint_R (\Curl F) \, dA \right] = \lim_{\epsilon \to 0^+} \frac{0}{\Area(R)}=0
+\end{align}since $\Area(R)=\Area(\overline{B_{\epsilon}(p)})>0$. By Corollary 8.2.8 (as derived from the integral MVT), since $R=\overline{B_{\epsilon}(p)}$ and $\Curl F$ is continuous, (2) is equal to $(\Curl F)(p)$. Hence, $(\Curl F)(p)=0$, and since $p$ was arbitrary in $U$, $F\in\Ker(\Curl)=\{F\in V^2:\Curl(F)=0\}$. Since $F$ was arbitrary in $\Img(\Grad))$, $\Img(\Grad)\subseteq\Ker(\Curl))$.
+\end{answer}	
+	
+	
+	\pagebreak
+	\item The image may or may not equal the kernel in (\ref{AllTheCalculus}\ref{ImgKer}). It depends on the topology of $U \subseteq \R^2$.  
+	
+	\begin{itemize}
+		\item Give an example of a set $U = U_1$ where $\Img(\Grad)  = \Ker(\Curl)$.
+		\item Give an example of a set $U = U_2$ where $\Img(\Grad) \subsetneq \Ker(\Curl)$.
+	\end{itemize}
+	Briefly justify each of your examples. \textit{Hint:} Check out the J5 readings and/or worksheet.
+	
+	% Do not change the height of this box
+	\begin{answer}{250pt}
+		% Insert your answer here
+Define $U_1=R^2$, which is a simply connected domain since it is open, path-connected, and the inside of every simple closed curve lying in $U_1$ is a subset of $U_1$. By Theorem 11.5.14, since $U_1$ is simply connected, every irrotational function $F\in V^2$ is conservative on $U_1$. Thus, $\forall F\in V^2$, $F\in \Ker(\Curl)\implies F$ is irrotational $\implies\exists f: U_1\to \R$ such that $F=\Grad(f)$ by Theorem 11.5.14. This implies $\Ker(\Curl)\subseteq\Img(\Grad)$ for $U_1$, so $\Img(\Grad) = \Ker(\Curl)$.\\
+
+Define $U_2: R^2\setminus\{(0,0,0)\}$ and $F:U_2\to\R^2$ by $F(x,y)=(\frac{-y}{x^2+y^2},\frac{x}{x^2+y^2})$ for $(x,y)\in U_2$. Notice that $\partial_1 F_2=\frac{y^2-x^2}{(y^2+x^2)^2}=\partial_2 F_1$, so $F$ is irrotational and $F\in \Ker(\Curl)$. However, since $F$ is not a gradient vector field (hence not conservative) by Problem Set 7 Q4, there is no function $f\in V$ such that $F=\Grad(f)$. Thus, $\Ker(\Curl)\nsubseteq\Img(\Grad)$, so $\Img(\Grad) \subsetneq \Ker(\Curl)$.
+	\end{answer}	
+	
+	\item These observations about $\Grad$ and $\Curl$   can be beautifully encapsulated in this elegant diagram. 
+	\begin{center}
+	\adjustbox{scale=1.5,center}{
+	\begin{tikzcd}
+ 	 V \arrow{r}{\Grad}  & V^2 \arrow{r}{\Curl}  & V 
+	\end{tikzcd}
+	}
+	\end{center}
+	At first glance, this appears to just be a composition of maps but if you dig a bit deeper, you will notice it actually captures a lot of vector calculus in $\R^2$. 	Take an arbitrary element at the leftmost $V$ in the diagram. Map it once to $V^2$ and then map it again to the next $V$. The element has moved two stages to the right. What happened to this element? How do the two core theorems of vector calculus in $\R^2$ relate to this phenomenon? Explain in two to three full sentences using the previous parts of this question. 
+
+
+	% Do not change the height of this box
+	\begin{answer}{200pt}
+		% Insert your answer here
+For every element $f\in V$, its image under $\Grad$, $\Grad(f)\in V^2$, is conservative, and the image of $\Grad(f)$ under $\Curl$ is the zero function in $V$. This follows from FTLI and Green's by 2c, thus showing that conservative vector fields are irrotational (encapsulated in the $V^2\to V$ transformation) and creating this phenomenon.
+	\end{answer}	
+\end{parts}
+
+
+\pagebreak
+%%% QUESTION 3
+\question  Fix $R, H > 0$. Let $S\subseteq \R^3$ be the part of the cone $H^2(x^2+y^2) = R^2 z^2$ with $0 \leq z \leq H$. 
+\begin{parts}
+	\item Prove that $S$ is a surface. 
+	% Do not change the height of this box
+	\begin{answer}{580pt}
+		% Insert your answer here
+Define $D = [0,R]\times[0,2\pi]$ and $\phi: D \to \R^2$ by $\phi(r,t)=(r\cos t, r\sin t, \frac{H}{R}r)$. Note $D$ is regular since it is compact, Jordan measurable, and $D = \overline{D^{\mathrm{o}}}$. Also, $D$ is path-connected, $\phi$ is continuous, and $\phi(D) = S$. Thus, by definition 13.1.1, $\phi$ is a (2-variable) parametrization of $S$.\\
+
+For $p\in D^{\mathrm{o}}$, $\phi$ is $C^1$ at $p$ and $\{\partial_1\phi(p),\partial_2\phi(p)\}=\{(\cos t, \sin t, \frac{H}{R}), (-r\sin t, r\cos t, 0)\}$ is a linearly independent set. Thus, by definition 13.1.7, $\phi$ is regular.\\
+
+To show $\phi$ is injective on $D$ except along $\partial D$, suppose that $\exists x,y\in D$ such that $x,y\notin\partial D$, $\phi(x)=\phi(y)$ and $x\neq y$. This yields the system of equations\begin{align*}
+    x_1\cos(x_2) &= y_1\cos(y_2)\\
+    x_1\sin(x_2) &= y_1\sin(y_2)\\
+    \frac{H}{R}x_1 &= \frac{H}{R}y_1
+\end{align*}By the third equation, $x_1=y_1$. Since $x\neq y$, this means $x_2\neq y_2$. By the first and second equations, $\cos(x_2)=\cos(y_2)$ and $\sin(x_2)=\sin(y_2)$, meaning either $x_2=0,y_2=2\pi$ or $x_2=2\pi,y_2=0$. This yields a contradiction since $(x,y)\in(\{(x_1,0)\in\R^2:x_1\in[0,2\pi]\}\cup\{(x_1,2\pi)\in\R^2:x_1\in[0,2\pi]\})\subseteq\partial D$, or else $x_2=y_2$ which implies $x=y$. Thus, $\forall x,y\in D$, either $\phi(x)=\phi(y)\implies x=y$ or $x,y\in\partial D$, meaning $\phi$ is simple by definition 13.1.12.\\
+
+By definition 13.1.18, $S$ is a surface since $\phi$ is a simple regular 2-variable parametrizaton of $S$.
+	\end{answer}
+	
+	\pagebreak
+	\item Calculate the surface area of $S$ by definition. 
+	% Do not change the height of this box
+	\begin{answer}{600pt}
+		% Insert your answer here
+	\end{answer}
+
+	\pagebreak
+	\item Orient $S$ with upward unit normal. Find the flux of $F(x,y,z) = (x,y,z)$ across $S$ by directly calculating the surface integral $\iint_S F \cdot n \; dS$. Do not use Stokes' theorem  or the divergence theorem.
+ 
+% Do not change the height of this box
+\begin{answer}{600pt}
+	% Insert your answer here
+By definition 13.4.1 and using the cross product calculation from part b,\begin{equation*}\begin{split}
+    \iint_S F \cdot n \; dS&=\iint_D (F\circ\phi)\cdot(\partial_1\phi\times\partial_2\phi)\;dA \\
+    &=\int_0^{2\pi}\int_0^R F(\phi(r,t))\cdot(-\frac{H}{R}r\cos(t),-\frac{H}{R}r\sin(t),r)\; drdt \\
+    &=\int_0^{2\pi}\int_0^R (r\cos(t),r\sin(t),\frac{H}{R}r)\cdot(-\frac{H}{R}r\cos(t),-\frac{H}{R}r\sin(t),r)\;drdt \\
+    &=\int_0^{2\pi}\int_0^R -\frac{H}{R}r^2\cos^2(t)-\frac{H}{R}r^2\sin^2(t)+\frac{H}{R}r^2 \;drdt \\
+    &=\frac{H}{R} \int_0^{2\pi}\int_0^R r^2-r^2 \;drdt \\
+    &=\frac{H}{R} \int_0^{2\pi}\int_0^R 0 \;drdt \\
+    &=0
+\end{split}\end{equation*}Note that in the first to second lines of the above, $(\partial_1\phi\times\partial_2\phi)$ was chosen to be (+1)$(-\frac{H}{R}r\cos(t),-\frac{H}{R}r\sin(t),r)$. This is since the unit normal points upwards, which is consistent with the direction of $(\partial_1\phi\times\partial_2\phi)$ (which has a positive z component), meaning its sign is positive.
+\end{answer}
+
+\end{parts}
+
+
+
+
+
+\pagebreak
+%%% QUESTION 5
+\question  Let $G : A \to \R^3$ and $H : B \to \R^3$ be parametrizations of an oriented surface $S \subseteq \R^3$. Assume there exists a diffeomorphism $\varphi : U \to V$ such that $\det D\varphi > 0$, $A \subseteq U$, $B \subseteq V$, $B = \varphi(A)$,  and $G(u) = (H \circ \varphi)(u)$ for $u \in A$.  
+\begin{parts}
+
+\item Let $F$ be a vector field in $\R^3$ that is continuous on $S$. Assuming 	
+\begin{equation} \label{cross}
+\forall u \in A^o, \quad (\partial_1 G \times \partial_2 G)(u)  =   (\partial_1 H \times \partial_2H)(\varphi(u)) \det D\varphi(u),
+\tag{$\star$} 		
+\end{equation}
+prove that 
+\[
+\iint_A (F \circ G)  \cdot (\partial_1 G \times \partial_2 G) \; dA =	\iint_B (F \circ H)  \cdot (\partial_1 H \times \partial_2 H) \; dA 
+\]
+provided both integrals exist. In other words, the surface integral is invariant under reparametrization. 
+% Do not change the height of this box
+\begin{answer}{500pt}
+	% Insert your answer here
+Assume both integrals exist. Define $\gamma: B^{\mathrm{o}}\to\R$ by $\gamma(v)=(F\circ H)(v)\cdot(\partial_1 H \times \partial_2 H)(v)$ for $v\in B^{\mathrm{o}}$. Thus, for $u\in A^{\mathrm{o}},$\begin{align}
+    \gamma(\varphi(u))=(F\circ H)(\varphi(u))\cdot(\partial_1 H \times \partial_2 H)(\varphi(u))
+\end{align}
+
+For $u\in A^{\mathrm{o}}$, $(F \circ G)(u)  \cdot (\partial_1 G \times \partial_2 G)(u) = (F \circ (H \circ \varphi))(u)\cdot(\partial_1 H \times \partial_2 H)(\varphi(u))\det D\varphi(u)$ by (*). Notice that by (3), this becomes $\gamma(\varphi(u))\det D(\varphi(u))=\gamma(\varphi(u))|\det D(\varphi(u))|$ since $\det D(\varphi(u))>0$.\\
+
+Since $G$ is a simple regular parametrization, its domain $A$ is a regular region and hence a compact Jordan measurable set. Notice $\gamma$ is integrable on $\varphi(A)=B$ since $\iint_B (F \circ H)  \cdot (\partial_1 H \times \partial_2 H) \; dA$ exists, so by the change of variables theorem, $(\gamma\circ\varphi)|\det D\varphi|$ is integrable on $A$ and the following holds:\begin{equation*}\begin{split}
+    \iint_A (F \circ G)  \cdot (\partial_1 G \times \partial_2 G) \; dA &=\iint_A (\gamma\circ\varphi)|\det D\varphi| \; dA \\
+    &=\iint_{\varphi(A)}\gamma \; dA\\
+    &=\iint_B (F\circ H)\cdot(\partial_1 H \times \partial_2 H) dA
+\end{split}\end{equation*} by definition of $\gamma$ and $\varphi(A) = B$.
+\end{answer}		
+
+\item By applying and citing properties of the cross product, prove that \eqref{cross} holds. 
+
+% Do not change the height of this box
+\begin{answer}{600pt}
+	% Insert your answer here
+\end{answer}
+
+\end{parts} 
+ 
+
+
+
+\end{questions}
+
+\end{document}
