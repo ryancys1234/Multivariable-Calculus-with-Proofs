@@ -1,0 +1,33 @@
+\documentclass[answers]{exam}
+\usepackage{amsfonts, amsmath}
+
+\begin{document}
+
+\begin{center}
+{\Large MAT237Y1 - Interview Activity}
+\end{center}
+
+\begin{questions}
+
+\question \textit{Claim:} Let $S\subseteq\mathbb{R}^n$ be a finite set. Prove that $S$ has zero Jordan measure.
+
+\begin{solution}
+Fix $\varepsilon > 0$. Set $N = |S|$, the cardinality of the set. Label the elements of $S$ as $x_1,x_2,...,x_N$. For $i\in\{1,...,N\}$, define the rectangles\begin{align*}
+    R_i = \left[(x_i)_1-\sqrt[n]{\frac{\varepsilon}{2^{n+1} N}},\ (x_i)_1+\sqrt[n]{\frac{\varepsilon}{2^{n+1} N}}\ \right]\times...\times\left[(x_i)_n-\sqrt[n]{\frac{\varepsilon}{2^{n+1} N}},\ (x_i)_n+\sqrt[n]{\frac{\varepsilon}{2^{n+1} N}}\ \right]\ .
+\end{align*} Notice that $x\in R_i$ by the construction of $R_i$ and\begin{align*}
+    \text{vol}(R_i)=(2\sqrt[n]{\frac{\varepsilon}{2^{n+1} N}})^n=(\sqrt[n]{\frac{\varepsilon}{2N}})^n=\frac{\varepsilon}{2N}\ .
+\end{align*}Therefore, $S\subseteq\bigcup_{i=0}^N R_i$ and\begin{align*}
+    \sum_{i=1}^N \text{vol}(R_i)=N\frac{\varepsilon}{2N}=\frac{\varepsilon}{2}<\varepsilon
+\end{align*}as needed.
+\end{solution}
+
+\end{questions}
+
+The skills needed to produce this solution include:\begin{itemize}
+    \item The ability to recall the definition of a set having zero Jordan measure, which in turn involves the definitions of rectangles, the volume of a rectangle, and the finite union and sum operations.
+    \item The ability to match the structure of the solution with the format of the definition. The steps must be taken in this order for correctness: fix an arbitrary $\varepsilon$, set an appropriate $N$, construct specific rectangles depending on $\varepsilon$ and $N$, then ensure the conditions of the definition are satisfied.
+    \item The ability to recognize what a finite set is and how to construct a simple rectangle that uses the properties of such a set to meet the conditions of the definition.
+    \item The ability to recognize and avoid potential sources of confusion. Above $(x_i)_1$ was used to avoid confusion with notation such as $x_{i1},...,x_{in}$, where it would be difficult to distinguish between the different subscripts.
+\end{itemize}
+
+\end{document}
